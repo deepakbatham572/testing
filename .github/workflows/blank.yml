@@ -23,9 +23,18 @@ jobs:
         with:
           node-version: '16'
         
-      # Navigate to the directory containing package.json (if needed)
-      - name: Change directory to client
-        run: cd client  # Modify this line if your package.json is in a different subfolder
+      # List the files in the root directory for debugging
+      - name: List files in the root directory
+        run: ls -al
+
+      # If necessary, navigate to the directory containing package.json (modify as needed)
+      - name: Change directory to client (if it exists)
+        run: |
+          if [ -d "client" ]; then
+            cd client
+          else
+            echo "Client directory not found!"
+          fi
 
       # Install dependencies
       - name: Install dependencies
