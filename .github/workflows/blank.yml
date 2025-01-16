@@ -23,20 +23,7 @@ jobs:
         with:
           node-version: '16'
         
-      # List the files in the root directory for debugging
-      - name: List files in the root directory
-        run: ls -al
-
-      # If necessary, navigate to the directory containing package.json (modify as needed)
-      - name: Change directory to client (if it exists)
-        run: |
-          if [ -d "client" ]; then
-            cd client
-          else
-            echo "Client directory not found!"
-          fi
-
-      # Install dependencies
+      # Install dependencies (assumes package.json is at the root)
       - name: Install dependencies
         run: npm install
         
