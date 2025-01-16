@@ -23,6 +23,10 @@ jobs:
         with:
           node-version: '16'
         
+      # Navigate to the directory containing package.json (if needed)
+      - name: Change directory to client
+        run: cd client  # Modify this line if your package.json is in a different subfolder
+
       # Install dependencies
       - name: Install dependencies
         run: npm install
