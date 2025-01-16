@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Playwright CI
 
 on:
   push:
@@ -13,20 +13,33 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      # Checkout the repository
+      # Checkout the code from the repository
       - name: Checkout code
         uses: actions/checkout@v3
         
-      # Set up Node.js (version 16 in this case)
+      # Set up Node.js (using version 16)
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '16'
-        
-      # Install dependencies (assumes package.json is at the root)
+
+      # Install dependencies
       - name: Install dependencies
         run: npm install
         
-      # Print a success message to confirm the workflow is running
-      - name: Print success message
-        run: echo "GitHub Action is successfully running on Ubuntu!"
+      # Run Playwright tests
+      - name: Run Playwright tests
+        run: npm test
+        env:
+          PWDEBUG: '1'  # Enable Playwright debugging
+
+      # Upload screenshots, videos, and traces as artifacts
+      - name: Upload Playwright artifacts
+        if: always()  # Ensure this runs even if the test fails
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-artifacts
+          path: |
+            **/test-results/**/*.png
+            **/test-results/**/*.mp4
+            **/test-results/**/*.zip
